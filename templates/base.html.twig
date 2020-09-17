@@ -1,12 +1,61 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <title>SnowTricks - {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/main.css">
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+<header>
+    <nav class="navbar row">
+        <div id="header-B" class="col-3">
+            <div class="row justify-content-end">
+                <div class="col-10">
+                    <a class="navbar-brand" href="{{ path('home') }}">
+                        <img id="logo align-self-center" src="images/logo/logo.svg" alt="SnowTricks logo"/>
+                        SnowTricks
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="header-A" class="col-9 row">
+            <div class="col-2 ml-auto align-self-center">
+                <a class="nav-link" href="{{ path('users.signUp') }}">S'inscrire</a>
+            </div>
+            <div class="col-2 align-self-center">
+                <a class="nav-link" href="#">Se connecter</a>
+            </div>
+        </div>
+    </nav>
+</header>
+{% block body %}{% endblock %}
+<footer>
+    <div id="footer" class="row">
+        <div id="footer-B" class="col-3 row justify-content-center">
+            <h5 class="align-self-center">SnowTricks, site communautaire</h5>
+        </div>
+        <div id="footer-A" class="col-9 row">
+            <img class="col-1 ml-auto align-self-center" src="images/reseaux/Facebook.svg" alt="Logo Facebook">
+            <img class="col-1 align-self-center" src="images/reseaux/Instagram.svg" alt="Logo Instagram">
+            <img class="col-1 align-self-center" src="images/reseaux/Twitter.svg" alt="Logo Twitter">
+            <img class="col-1 align-self-center" src="images/reseaux/Youtube.svg" alt="Logo Youtube">
+        </div>
+    </div>
+</footer>
+
+
+{% block javascripts %}{% endblock %}
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+</body>
 </html>
