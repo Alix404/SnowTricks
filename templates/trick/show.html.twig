@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title trick.trickName %}
+
+{% block body %}
+
+    <div class="container mt-4">
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title">
+                    {{ trick.trickName }}
+                </h1>
+                <div class="row">
+                    <div class="col-10">
+                        <p class="card-text">Description : <strong>{{ trick.description }}</strong></p>
+                    </div>
+                    <div class="col-2">
+                        <p class="card-text">Catégorie : <em>{{ trick.trickGroup }}</em></p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-auto mr-auto">
+                        <a href="{{ path('trick.edit', {id: trick.id, slug: trick.slug}) }}">
+                            <img src="/images/management/Edit-Pencil.svg" alt="Edition">
+                        </a>
+                    </div>
+                    <div class="col-auto ml-auto">
+                        <a href="#">
+                            <img src="/images/management/Recycle-Bin.svg" alt="Suppression">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

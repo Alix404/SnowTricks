@@ -4,4 +4,44 @@
 
 {% block body %}
 
+    <div class="container mt-4">
+
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+        {% endfor %}
+
+        <div class="row flex">
+            {% for trick in tricks %}
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="card-title">
+                                {{ trick.trickName }}
+                            </h1>
+                            <p class="card-text">Catégorie : <strong>{{ trick.trickGroup }}</strong></p>
+                            <div class="row">
+                                <div class="col-auto mr-auto">
+                                    <a href="{{ path('trick.edit', {id: trick.id, slug: trick.slug}) }}">
+                                        <img src="/images/management/Edit-Pencil.svg" alt="Edition">
+                                    </a>
+                                </div>
+                                <div class="col-auto ml-auto">
+                                    <form onsubmit="return confirm('Êtes-vous sur de vouloit supprimper la figure ?')" method="post" action="{{ path('trick.delete', {slug: trick.slug, id: trick.id}) }}">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
+                                        <button class="btn"><img src="/images/management/Recycle-Bin.svg" alt="Suppression">
+                                        </button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
 {% endblock %}
