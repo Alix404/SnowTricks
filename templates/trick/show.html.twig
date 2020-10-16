@@ -7,8 +7,15 @@
     <div class="container mt-4">
 
         {% for message in app.flashes('success') %}
-            <div class="alert alert-success">
-                {{ message }}
+            <div class="row alert alert-info mb-4">
+                <div class="col justify-self-start">
+                    {{ message }}
+                </div>
+                <div class="col justify-self-end">
+                    <button class="btn" onclick="this.parentElement.parentElement.style.display = 'none'">
+                        <img src="/images/management/Cross.svg" alt="X Cross">
+                    </button>
+                </div>
             </div>
         {% endfor %}
 

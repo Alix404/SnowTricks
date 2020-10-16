@@ -11,6 +11,10 @@ a:hover {
     color: #0064c3;
 }
 
+a.active {
+    color: #0064c3;
+}
+
 .row {
     margin: 0;
 }
@@ -20,7 +24,6 @@ nav.navbar {
     margin: 0;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
     height: 72px;
-
 }
 
 img #logo {
@@ -92,4 +95,35 @@ img #logo {
     border-radius: 0;
     background-color: #C6D2DF;
     box-shadow: inset -2px -2px 4px 0 rgba(0, 0, 0, 0.25), inset 2px 2px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.trick-card {
+    margin-bottom: 20px;
+}
+
+.paginate-master {
+    position: fixed;
+    bottom: 100px;
+    left: 0;
+    right: 0;
+}
+
+li.paginate {
+    list-style: none;
+}
+
+li.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+ul.pagination {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+ul li {
+    margin: 40px 10px;
+    font-size: 20px;
 }

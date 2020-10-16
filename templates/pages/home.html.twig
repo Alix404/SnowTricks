@@ -7,19 +7,26 @@
     <div class="container mt-4">
 
         {% for message in app.flashes('success') %}
-        <div class="alert alert-success">
-            {{ message }}
-        </div>
+            <div class="row alert alert-info mb-4">
+                <div class="col">
+                    {{ message }}
+                </div>
+                <div class="col ml-auto">
+                    <a href="{{ path('home') }}">
+                        <img src="/images/management/Cross.svg" alt="X Cross">
+                    </a>
+                </div>
+            </div>
         {% endfor %}
 
         <div class="row flex">
             {% for trick in tricks %}
-                <div class="col-4">
-                    <div class="card">
+                <div class="col-4 mt-4">
+                    <div class="card trick-card">
                         <div class="card-body">
-                            <h1 class="card-title">
+                            <h4 class="card-title">
                                 {{ trick.trickName }}
-                            </h1>
+                            </h4>
                             <p class="card-text">Catégorie : <strong>{{ trick.trickGroup }}</strong></p>
                             <div class="row">
                                 <div class="col-auto mr-auto">
@@ -28,10 +35,14 @@
                                     </a>
                                 </div>
                                 <div class="col-auto ml-auto">
-                                    <form onsubmit="return confirm('Êtes-vous sur de vouloit supprimper la figure ?')" method="post" action="{{ path('trick.delete', {slug: trick.slug, id: trick.id}) }}">
+                                    <form onsubmit="return confirm('Êtes-vous sur de vouloit supprimper la figure ?')"
+                                          method="post"
+                                          action="{{ path('trick.delete', {slug: trick.slug, id: trick.id}) }}">
                                         <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
-                                        <button class="btn"><img src="/images/management/Recycle-Bin.svg" alt="Suppression">
+                                        <input type="hidden" name="_token"
+                                               value="{{ csrf_token('delete' ~ trick.id) }}">
+                                        <button class="btn"><img src="/images/management/Recycle-Bin.svg"
+                                                                 alt="Suppression">
                                         </button>
                                     </form>
 
@@ -43,5 +54,26 @@
             {% endfor %}
         </div>
     </div>
+    <div class="paginate-master mt-4">
+        <ul class="pagination">
+            <li class="paginate {% if (currentPage == 1) %} disabled {% endif %}">
+                <a href="{{ path('home', {page: currentPage - 1}) }}">
+                    <img src="/images/pagination/LeftArrow.svg" alt="Précendent">
+                </a>
+            </li>
 
+            {% for page in 1..pages %}
+                <li class="paginate">
+                    <a class="{% if (currentPage == page) %}active{% endif %}"
+                       href="{{ path('home', {page: page}) }}">{{ page }}</a>
+                </li>
+            {% endfor %}
+
+            <li class="paginate {% if (currentPage == pages) %} disabled {% endif %}">
+                <a href="{{ path('home', {page: currentPage + 1}) }}">
+                    <img src="/images/pagination/RightArrow.svg" alt="Suivant">
+                </a>
+            </li>
+        </ul>
+    </div>
 {% endblock %}
