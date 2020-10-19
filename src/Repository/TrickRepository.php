@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Trick;
+use App\Entity\TrickSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -20,20 +21,35 @@ class TrickRepository extends ServiceEntityRepository
         parent::__construct($registry, Trick::class);
     }
 
-    public function countTricks()
+    public function countTricks(TrickSearch $search)
     {
-        return $this->createQueryBuilder('t')
-            ->select('count(t.id)')
+        $query = $this->createQueryBuilder('t')
+            ->select('count(t.id)');
+        if ($search->getCategory()) {
+            $query = $query
+                ->where('t.trick_group = :trick_group')
+                ->setParameter('trick_group', $search->getCategory());
+        }
+        $query
             ->getQuery()
             ->getSingleScalarResult();
     }
 
-    public function findWithOrder($first, $max)
+    public function findWithOrder($first, $max, TrickSearch $search)
     {
-        return $this->createQueryBuilder('t')
+        $query = $this->createQueryBuilder('t');
+
+        if ($search->getCategory()) {
+            $query = $query
+                ->where('t.trick_group = :trick_group')
+                ->setParameter('trick_group', $search->getCategory());
+        }
+        $query = $query
             ->orderBy('t.updated_at', 'DESC')
             ->setMaxResults($max)
-            ->setFirstResult($first)
+            ->setFirstResult($first);
+
+        return $query
             ->getQuery()
             ->getResult();
     }

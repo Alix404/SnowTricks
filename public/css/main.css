@@ -101,13 +101,6 @@ img #logo {
     margin-bottom: 20px;
 }
 
-.paginate-master {
-    position: fixed;
-    bottom: 100px;
-    left: 0;
-    right: 0;
-}
-
 li.paginate {
     list-style: none;
 }
@@ -126,4 +119,9 @@ ul.pagination {
 ul li {
     margin: 40px 10px;
     font-size: 20px;
+}
+
+.search-btn {
+    background-color: #8B99A9;
+    color: #082B4B;
 }
