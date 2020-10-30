@@ -35,7 +35,7 @@
                             <h4 class="card-title">
                                 {{ trick.trickName }}
                             </h4>
-                            <p class="card-text">Catégorie : <strong>{{ trick.trickGroup }}</strong></p>
+                            <p class="card-text">Catégorie : <strong>{{ trick.category.name }}</strong></p>
                             <div class="row">
                                 <div class="col-auto mr-auto">
                                     <a href="{{ path('trick.edit', {id: trick.id, slug: trick.slug}) }}">
@@ -85,3 +85,4 @@
         </ul>
     </div>
 {% endblock %}
+

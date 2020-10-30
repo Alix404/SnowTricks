@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Les catégories' %}
+
+{% block body %}
+
+    <div class="container mt-4">
+
+        {% for message in app.flashes('success') %}
+            <div class="row alert alert-info mb-4">
+                <div class="col justify-self-start">
+                    {{ message }}
+                </div>
+                <div class="col justify-self-end">
+                    <button class="btn" onclick="this.parentElement.parentElement.style.display = 'none'">
+                        <img src="/images/management/Cross.svg" alt="X Cross">
+                    </button>
+                </div>
+            </div>
+        {% endfor %}
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for category in categories %}
+                <tr>
+                    <td>{{ category.name }}</td>
+                    <td>
+                        <a href="{{ path('category.edit', {id: category.id}) }}" class="btn">Éditer</a>
+                        <form action="{{ path('category.edit', {id: category.id}) }}" style="display: inline-block"
+                              onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?')">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete') ~ category.id }}">
+                            <button class="btn-danger" type="submit">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

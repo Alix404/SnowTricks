@@ -2,9 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Trick;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,8 +22,11 @@ class TrickType extends AbstractType
         $builder
             ->add('trick_name')
             ->add('description')
-            ->add('trick_group', ChoiceType::class, [
-                'choices' => array_flip(Trick::TRICK_GROUP)
+            ->add('category', EntityType::class, [
+                'class' => Category::class,
+                'choice_label' => 'name',
+                'label' => 'Catégorie',
+                'multiple' => true
             ])
             ->add('updated_at', HiddenType::class);
     }

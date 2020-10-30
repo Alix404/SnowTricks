@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>SnowTricks - {% block title %}{% endblock %}</title>
+    <link rel="icon" href="/images/favicon/favicon.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"/>
     <link rel="stylesheet" href="/css/main.css">
+
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
@@ -25,7 +28,7 @@
             <div id="header-A" class="col-9 row">
                 <div class="col-3 ml-auto align-self-center">
                     <a class="nav-link" href="{{ path('trick.create') }}">
-                        <img src="/images/management/Create.svg" alt="Create icon">  Ajouter une nouvelle figure
+                        <img src="/images/management/Create.svg" alt="Create icon"> Ajouter une nouvelle figure
                     </a>
                 </div>
                 <div class="col-2 align-self-center">
@@ -35,7 +38,7 @@
         {% else %}
             <div id="header-A" class="col-9 row">
                 <div class="col-2 ml-auto align-self-center">
-                    <a class="nav-link" href="#">S'inscrire</a>
+                    <a class="nav-link" href="{{ path('register') }}">S'inscrire</a>
                 </div>
                 <div class="col-2 align-self-center">
                     <a class="nav-link" href="{{ path('login') }}">Se connecter</a>
@@ -60,7 +63,6 @@
 </footer>
 
 
-{% block javascripts %}{% endblock %}
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
@@ -70,5 +72,9 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
-</body>
-</html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+<script>
+    $('select').select2();
+</script>
+{% block javascript %}{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Création' %}
+
+{% block body %}
+
+    <div class="container mt-4">
+        <h1>Créer une nouvelle figure</h1>
+        {{ include('user/category/_form.html.twig', {form: form}) }}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'S\'inscrire' %}
+
+{% block body %}
+    <div class="container mt-4">
+
+        {% if errors %}
+            <div class="alert alert-danger">
+                {{ errors.messageKey | trans(errors.messageData, 'security') }}
+            </div>
+        {% endif %}
+
+        {{ form_start(form) }}
+
+        {{ form_rest(form) }}
+        <button class="btn" type="submit">S'inscrire</button>
+        {{ form_end(form) }}
+
+    </div>
+{% endblock %}

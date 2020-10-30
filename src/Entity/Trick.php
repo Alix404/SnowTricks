@@ -12,16 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Trick
 {
 
-    const TRICK_GROUP = [
-        1 => 'grabs',
-        2 => 'rotations',
-        3 => 'flips',
-        4 => 'off-center rotations',
-        5 => 'slides',
-        6 => 'one foot',
-        7 => 'old school'
-    ];
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -40,11 +30,6 @@ class Trick
     private $description;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $trick_group;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $created_at;
@@ -53,6 +38,11 @@ class Trick
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updated_at;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="tricks")
+     */
+    private $category;
 
     public function __construct()
     {
@@ -93,17 +83,6 @@ class Trick
         return $this;
     }
 
-    public function getTrickGroup(): ?string
-    {
-        return isset(self::TRICK_GROUP[$this->trick_group]) ? self::TRICK_GROUP[$this->trick_group] : self::TRICK_GROUP[1];
-    }
-
-    public function setTrickGroup(int $trick_group): self
-    {
-        $this->trick_group = $trick_group;
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->created_at;
@@ -124,6 +103,18 @@ class Trick
     public function setUpdatedAt(?\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
