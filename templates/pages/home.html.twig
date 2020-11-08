@@ -33,7 +33,7 @@
                     <div class="card trick-card">
                         <div class="card-body">
                             <h4 class="card-title">
-                                {{ trick.trickName }}
+                                <a href="{{ path('trick.show', {id: trick.id, slug: trick.slug}) }}">{{ trick.trickName }}</a>
                             </h4>
                             <p class="card-text">Catégorie : <strong>{{ trick.category.name }}</strong></p>
                             <div class="row">

@@ -26,8 +26,9 @@ class TrickType extends AbstractType
                 'class' => Category::class,
                 'choice_label' => 'name',
                 'label' => 'Catégorie',
-                'multiple' => true
+                'multiple' => false
             ])
+            ->add('filename')
             ->add('updated_at', HiddenType::class);
     }
 

@@ -68,7 +68,6 @@ class UserTrickController extends AbstractController
                 'slug' => $trick->getSlug(),
             ], 301);
         }
-
         return $this->render('user/trick/edit.html.twig', [
             'trick' => $trick,
             'form' => $form->createView()

@@ -7,23 +7,23 @@ namespace App\Entity;
 class TrickSearch
 {
     /**
-     * @var int|null
+     * @var Category|null
      */
     private $category;
 
     /**
-     * @return int|null
+     * @return Category|null
      */
-    public function getCategory(): ?int
+    public function getCategory(): ?Category
     {
         return $this->category;
     }
 
     /**
-     * @param int|null $category
+     * @param Category|null $category
      * @return TrickSearch
      */
-    public function setCategory(int $category): TrickSearch
+    public function setCategory(Category $category): TrickSearch
     {
         $this->category = $category;
         return $this;

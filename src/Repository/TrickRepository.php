@@ -27,8 +27,8 @@ class TrickRepository extends ServiceEntityRepository
             ->select('count(t.id)');
         if ($search->getCategory()) {
             $query = $query
-                ->where('t.trick_group = :trick_group')
-                ->setParameter('trick_group', $search->getCategory());
+                ->where('t.category = :category_id')
+                ->setParameter('category_id', $search->getCategory());
         }
         $query
             ->getQuery()
@@ -41,8 +41,8 @@ class TrickRepository extends ServiceEntityRepository
 
         if ($search->getCategory()) {
             $query = $query
-                ->where('t.trick_group = :trick_group')
-                ->setParameter('trick_group', $search->getCategory());
+                ->where('t.category = :category_id')
+                ->setParameter('category_id', $search->getCategory());
         }
         $query = $query
             ->orderBy('t.updated_at', 'DESC')

@@ -18,7 +18,7 @@ class TrickSearchType extends AbstractType
                 'class' => Category::class,
                 'choice_label' => 'name',
                 'label' => 'Recherche par catégorie',
-                'multiple' => true
+                'multiple' => false
             ]);
     }
 

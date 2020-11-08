@@ -2,12 +2,16 @@
 
 namespace App\Entity;
 
+use App\Annotation\Uploadable;
+use App\Annotation\UploadableField;
 use App\Repository\TrickRepository;
 use Cocur\Slugify\Slugify;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
+ * @Uploadable()
  */
 class Trick
 {
@@ -40,13 +44,42 @@ class Trick
     private $updated_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="tricks")
+     * @ORM\ManyToOne(targetEntity=Category::class)
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
     private $category;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $filename;
+
+    /**
+     * @UploadableField(filename="filename", path="uploads")
+     */
+    private $file;
 
     public function __construct()
     {
         $this->created_at = new \DateTime();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param mixed $file
+     * @return Trick
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+        return $this;
     }
 
     public function getId(): ?int
@@ -107,14 +140,45 @@ class Trick
         return $this;
     }
 
-    public function getCategory(): ?Category
+    public function addCategory(Category $category): self
+    {
+        if (!$this->category->contains($category)) {
+            $this->setCategory($category);
+        }
+
+        return $this;
+    }
+
+    private function setCategory(Category $category)
+    {
+        $this->category[] = $category;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->category->contains($category)) {
+            $this->category->removeElement($category);
+            if ($this->getCategory() === $this) {
+                $this->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCategory(): Category
     {
         return $this->category;
     }
 
-    public function setCategory(?Category $category): self
+    public function getFilename(): ?string
     {
-        $this->category = $category;
+        return $this->filename;
+    }
+
+    public function setFilename(string $filename): self
+    {
+        $this->filename = $filename;
 
         return $this;
     }
