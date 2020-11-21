@@ -31,9 +31,12 @@ services:
     class: App\Annotation\UploadAnnotationReader
     arguments: [ "@annotations.reader"]
 
+  upload.handler:
+    class: App\Handler\UploadHandler
+
   upload.subscriber:
     class: App\Listener\UploadSubscriber
-    arguments: ["@upload.annotation_reader"]
+    arguments: ["@upload.annotation_reader", "@upload.handler"]
     tags:
       - { name: doctrine.event_subscriber, connection: default }
   # add more service definitions when explicit configuration is needed

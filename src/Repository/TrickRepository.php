@@ -30,7 +30,7 @@ class TrickRepository extends ServiceEntityRepository
                 ->where('t.category = :category_id')
                 ->setParameter('category_id', $search->getCategory());
         }
-        $query
+        return $query
             ->getQuery()
             ->getSingleScalarResult();
     }

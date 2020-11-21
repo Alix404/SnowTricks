@@ -6,8 +6,8 @@ use App\Annotation\Uploadable;
 use App\Annotation\UploadableField;
 use App\Repository\TrickRepository;
 use Cocur\Slugify\Slugify;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
@@ -149,9 +149,9 @@ class Trick
         return $this;
     }
 
-    private function setCategory(Category $category)
+    public function setCategory(Category $category)
     {
-        $this->category[] = $category;
+        $this->category = $category;
     }
 
     public function removeCategory(Category $category): self
@@ -166,7 +166,7 @@ class Trick
         return $this;
     }
 
-    public function getCategory(): Category
+    public function getCategory(): ?Category
     {
         return $this->category;
     }

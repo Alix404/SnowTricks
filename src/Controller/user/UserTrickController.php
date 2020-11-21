@@ -61,6 +61,7 @@ class UserTrickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $trick->setUpdatedAt(new \DateTime());
             $this->manager->flush();
             $this->addFlash('success', 'La figure a été correctement modifiée');
             return $this->redirectToRoute('trick.show', [
@@ -87,6 +88,8 @@ class UserTrickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $trick->setCreatedAt(new \DateTime());
+            $trick->setUpdatedAt(new \DateTime());
             $this->manager->persist($trick);
             $this->manager->flush();
             $this->addFlash('success', 'La figure a été correctement crée');

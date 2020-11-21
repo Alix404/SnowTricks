@@ -5,7 +5,7 @@
 {% block body %}
     <div class="container mt-4">
         {{ form_start(form) }}
-        <div class="form-row ">
+        <div class="form-row align-items-center">
             <div class="col-10">
                 {{ form_row(form.category) }}
             </div>
@@ -31,6 +31,12 @@
             {% for trick in tricks %}
                 <div class="col-4 mt-4">
                     <div class="card trick-card">
+                        {% if not trick.file == null %}
+                            <div class="card-header">
+                                <img src="{{ asset(trick.file) }}" alt="Image de la figure {{ trick.trickName }}"
+                                     width="302" height="316">
+                            </div>
+                        {% endif %}
                         <div class="card-body">
                             <h4 class="card-title">
                                 <a href="{{ path('trick.show', {id: trick.id, slug: trick.slug}) }}">{{ trick.trickName }}</a>
@@ -43,7 +49,7 @@
                                     </a>
                                 </div>
                                 <div class="col-auto ml-auto">
-                                    <form onsubmit="return confirm('Êtes-vous sur de vouloit supprimper la figure ?')"
+                                    <form onsubmit="return confirm('Êtes-vous sur de vouloir supprimper la figure ?')"
                                           method="post"
                                           action="{{ path('trick.delete', {slug: trick.slug, id: trick.id}) }}">
                                         <input type="hidden" name="_method" value="DELETE">

@@ -6,8 +6,10 @@ use App\Entity\Category;
 use App\Entity\Trick;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TrickType extends AbstractType
@@ -28,8 +30,7 @@ class TrickType extends AbstractType
                 'label' => 'Catégorie',
                 'multiple' => false
             ])
-            ->add('filename')
-            ->add('updated_at', HiddenType::class);
+            ->add('file', FileType::class, ['required' => false]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
