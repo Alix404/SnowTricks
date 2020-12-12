@@ -1,0 +1,16 @@
+<div class="card mt-4" id="comment-{{ comment.id }}">
+    <div class="card-body">
+        <p class="card-text">{{ comment.content }}</p>
+        {% if app.user %}
+            <button class="btn btn-info reply" data-id="{{ comment.id }}">Répondre</button>
+        {% endif %}
+    </div>
+</div>
+
+<div class="ml-5">
+    {% if comment.children != null %}
+        {% for comment in comment.children %}
+            {% include 'trick/comment.html.twig' %}
+        {% endfor %}
+    {% endif %}
+</div>
