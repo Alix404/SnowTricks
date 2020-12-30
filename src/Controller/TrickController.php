@@ -9,6 +9,7 @@ use App\Entity\Trick;
 use App\Form\CommentType;
 use App\Repository\CommentRepository;
 use App\Repository\TrickRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,13 +30,18 @@ class TrickController extends AbstractController
      * @var CommentRepository
      */
     private $commentRepository;
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
 
-    public function __construct(TrickRepository $trickRepository, EntityManagerInterface $manager, CommentRepository $commentRepository)
+    public function __construct(TrickRepository $trickRepository, EntityManagerInterface $manager, CommentRepository $commentRepository, UserRepository $userRepository)
     {
 
         $this->trickRepository = $trickRepository;
         $this->manager = $manager;
         $this->commentRepository = $commentRepository;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -52,8 +58,10 @@ class TrickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $commentEntity->setTrick($trick);
-            $commentEntity->setParentId($_POST['parent_id']);
+            $commentEntity->setCreatedAt(new \DateTime())
+                ->setUser($this->getUser())
+                ->setTrick($trick)
+                ->setParentId($_POST['parent_id']);
             $this->manager->persist($commentEntity);
             $this->manager->flush();
             $this->addFlash('success', 'Votre comentaire a été correctement ajouté');
@@ -71,6 +79,7 @@ class TrickController extends AbstractController
         foreach ($comments as $k => $comment) {
             if ($comment->getParentId() != 0) {
                 $comments_by_id[$comment->getParentId()]->setChildren($comment);
+                $userComment = $this->userRepository->getUserByComment($comment->getUser());
                 unset($comments[$k]);
             }
         }
@@ -80,10 +89,12 @@ class TrickController extends AbstractController
                 'slug' => $trick->getSlug(),
             ], 301);
         }
+
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
             'form' => $form->createView(),
             'comments' => $comments,
+            'user' => $userComment
         ]);
     }
 }

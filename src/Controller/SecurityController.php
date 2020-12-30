@@ -60,7 +60,6 @@ class SecurityController extends AbstractController
 
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword($this->encoder->encodePassword($user, $form->get('password')->getViewData()));
             $this->manager->persist($user);

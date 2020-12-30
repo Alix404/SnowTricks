@@ -1,4 +1,11 @@
 <div class="card mt-4" id="comment-{{ comment.id }}">
+    <div class="card-header">
+
+        <img src="{{ asset("uploads/user/" ~ comment.user.filename) }}" alt="User profile picture" width="50"
+             height="50">
+        <strong>{{ comment.user.username }}</strong>
+        {{ comment.createdAt }}
+    </div>
     <div class="card-body">
         <p class="card-text">{{ comment.content }}</p>
         {% if app.user %}

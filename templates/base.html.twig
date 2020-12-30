@@ -30,6 +30,10 @@
                         <img src="/images/management/Create.svg" alt="Create icon"> Ajouter une nouvelle figure
                     </a>
                 </div>
+                <div class="col-3 ml-auto align-self-center">
+                    <img src="{{ asset("uploads/user/" ~ app.user.filename) }}" alt="user profile picture" width="50" height="50">
+                    <strong>{{ app.user.username }}</strong>
+                </div>
                 <div class="col-2 align-self-center">
                     <a class="nav-link" href="{{ path('logout') }}">Se déconnecter</a>
                 </div>

@@ -4,6 +4,7 @@
 namespace App\Handler;
 
 
+use App\Entity\User;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -25,17 +26,21 @@ class UploadHandler
     {
         $file = $this->accessor->getValue($entity, $property);
         if ($file instanceof UploadedFile) {
+            $this->removeOldFile($entity, $annotation);
             $filename = $file->getClientOriginalName();
             $file->move($annotation->getPath(), $filename);
             $this->accessor->setValue($entity, $annotation->getFilename(), $filename);
         }
     }
 
-    public function setFileFromFilename($entity, $property, $annotation)
+    public function removeOldFile($entity, $annotation)
     {
-        $file = $this->getFileFromFilename($entity, $annotation);
-        if ($file !== null) {
-            $this->accessor->setValue($entity, $property, $file);
+        $filename = $this->accessor->getValue($entity, $annotation->getFilename());
+        if (empty($filename)) {
+            return null;
+        } else {
+            $file = $this->getFileFromFilename($entity, $annotation);
+            @unlink($file->getRealPath());
         }
     }
 
@@ -54,14 +59,11 @@ class UploadHandler
         }
     }
 
-    public function removeOldFile($entity, $annotation)
+    public function setFileFromFilename($entity, $property, $annotation)
     {
-        $filename = $this->accessor->getValue($entity, $annotation->getFilename());
-        if (empty($filename)) {
-            return null;
-        } else {
         $file = $this->getFileFromFilename($entity, $annotation);
-            @unlink($file->getRealPath());
+        if ($file !== null) {
+            $this->accessor->setValue($entity, $property, $file);
         }
     }
 

@@ -47,4 +47,12 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function getUserByComment($getUser)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.id = :userId')
+            ->setParameter('userId', $getUser)
+            ->getQuery()
+            ->getSingleResult();
+    }
 }

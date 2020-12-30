@@ -9,10 +9,11 @@ use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
+ * @UniqueEntity("trick_name")
  * @Uploadable()
  */
 class Trick
@@ -157,11 +158,6 @@ class Trick
         return $this;
     }
 
-    public function setCategory(Category $category)
-    {
-        $this->category = $category;
-    }
-
     public function removeCategory(Category $category): self
     {
         if ($this->category->contains($category)) {
@@ -177,6 +173,11 @@ class Trick
     public function getCategory(): ?Category
     {
         return $this->category;
+    }
+
+    public function setCategory(Category $category)
+    {
+        $this->category = $category;
     }
 
     public function getFilename(): ?string

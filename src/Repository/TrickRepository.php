@@ -53,4 +53,14 @@ class TrickRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function isTrickNameUnique($trick_name, $id)
+    {
+        return $query = $this->createQueryBuilder('t')
+            ->where('t.trick_name = :trick_name')
+            ->andWhere('t.id != :id')
+            ->setParameters(['trick_name' => $trick_name, 'id' => $id])
+            ->getQuery()
+            ->getResult();
+    }
 }

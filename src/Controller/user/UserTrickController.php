@@ -22,10 +22,15 @@ class UserTrickController extends AbstractController
      * @var EntityManagerInterface
      */
     private $manager;
+    /**
+     * @var TrickRepository
+     */
+    private $repository;
 
-    public function __construct(EntityManagerInterface $manager)
+    public function __construct(EntityManagerInterface $manager, TrickRepository $repository)
     {
         $this->manager = $manager;
+        $this->repository = $repository;
     }
 
     /**
@@ -59,20 +64,18 @@ class UserTrickController extends AbstractController
 
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
+            $trick->setCreatedAt(new \DateTime());
             $trick->setUpdatedAt(new \DateTime());
+            $this->manager->persist($trick);
             $this->manager->flush();
-            $this->addFlash('success', 'La figure a été correctement modifiée');
-            return $this->redirectToRoute('trick.show', [
-                'id' => $trick->getId(),
-                'slug' => $trick->getSlug(),
-            ], 301);
+            $this->addFlash('success', 'La figure a été correctement crée');
+
+            return $this->redirectToRoute('home');
         }
-        return $this->render('user/trick/edit.html.twig', [
-            'trick' => $trick,
-            'form' => $form->createView()
-        ]);
+
+        return $this->render('user/trick/edit.html.twig', ['trick' => $trick,
+            'form' => $form->createView()]);
     }
 
     /**
@@ -80,7 +83,8 @@ class UserTrickController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function create(Request $request): Response
+    public
+    function create(Request $request): Response
     {
         $trick = new Trick();
 
@@ -97,10 +101,8 @@ class UserTrickController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        return $this->render('user/trick/create.html.twig', [
-            'trick' => $trick,
-            'form' => $form->createView()
-        ]);
+        return $this->render('user/trick/create.html.twig', ['trick' => $trick,
+            'form' => $form->createView()]);
     }
 
     /**
@@ -110,7 +112,8 @@ class UserTrickController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function delete(Trick $trick, string $slug, Request $request)
+    public
+    function delete(Trick $trick, string $slug, Request $request)
     {
         if ($trick->getSlug() !== $slug) {
             $this->redirectToRoute('trick.show', [

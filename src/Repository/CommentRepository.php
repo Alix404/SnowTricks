@@ -29,5 +29,4 @@ class CommentRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-
 }
